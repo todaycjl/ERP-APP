@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">三环集团</string>
+    <string name="title_home">主页</string>
+    <string name="title_dashboard">审批</string>
+    <string name="title_notifications">动态</string>
+    <string name="test">测试文字</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+
+    <string name="examination_me_submit">我提交的</string>
+    <string name="examination_me_to">待我审批</string>
+    <string name="examination_me_copy">抄送我的</string>
+    <string name="space">-   </string>
+    <string name="examination_Reimbursement">费用报销</string>
+    <string name="examination_cost">费用申请</string>
+    <string name="examination_leave">请假</string>
+    <string name="examination_purchase">采购</string>
+
+
+    <string name="title_activity_base">BaseActivity</string>
+
+
+    <string name="type">报表类型 : </string>
+    <string name="type_name">报表名称 : </string>
+    <string name="reason">申请事由 : </string>
+    <string name="money">费用金额 : </string>
+    <string name="day">发生日期 : </string>
+    <string name="remarks">备注 : </string>
+
+    <string name="company">所在公司 : </string>
+    <string name="department">所在部门 : </string>
+
+    <string name="select_photo">费用凭证</string>
+    <string name="submit_bill">提交申请</string>
+
+    <string name="input">请输入</string>
+    <string name="select">请选择</string>
+    <string name="swipe">刷新</string>
+
+    <string name="rmb">元/人民币</string>
+</resources>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    tools:context="com.sanhuan.demo.tabletest.BillStateActivity">
+
+    <ListView
+        android:id="@+id/bill_state_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:shrinkColumns="2"
+        android:stretchColumns="*">
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/Applicant"
+                android:gravity="center"
+                android:text="@string/test" />
+
+            <CheckBox
+                android:id="@+id/Applicant_check"
+                android:checked="false"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/accounting"
+                android:gravity="center"
+                android:text="@string/test" />
+
+            <CheckBox
+                android:id="@+id/accounting_check"
+                android:checked="false"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/manager"
+                android:gravity="center"
+                android:text="@string/test" />
+
+            <CheckBox
+                android:id="@+id/manager_check"
+                android:checked="false"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/accounting2"
+                android:gravity="center"
+                android:text="@string/test" />
+
+            <CheckBox
+                android:id="@+id/accounting2_check"
+                android:checked="false"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/Chairman"
+                android:gravity="center"
+                android:text="@string/test" />
+
+            <CheckBox
+                android:id="@+id/Chairman_check"
+                android:checked="false"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/supervise"
+                android:gravity="center"
+                android:text="@string/test" />
+
+            <CheckBox
+                android:id="@+id/supervise_check"
+                android:checked="false"
+                android:gravity="center" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/Finance"
+                android:gravity="center"
+                android:text="@string/test" />
+
+            <CheckBox
+                android:id="@+id/Finance_check"
+                android:checked="false"
+                android:gravity="center" />
+        </TableRow>
+    </TableLayout>
+
+
+</LinearLayout>
