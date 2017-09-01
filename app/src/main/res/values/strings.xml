@@ -13,7 +13,7 @@
     <string name="examination_me_copy">抄送我的</string>
     <string name="space">-   </string>
     <string name="examination_Reimbursement">费用报销</string>
-    <string name="examination_cost">费用申请</string>
+    <string name="examination_cost">费用申请(已启用)</string>
     <string name="examination_leave">请假</string>
     <string name="examination_purchase">采购</string>
 

@@ -1,11 +1,18 @@
 package com.sanhuan.demo.tabletest;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -18,12 +25,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.sanhuan.demo.util.Constants;
 import com.sanhuan.demo.util.L;
 import com.sanhuan.demo.util.LocalDBUtil;
+import com.sanhuan.demo.util.MyUtil;
 import com.sanhuan.demo.view.MyScrollView;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 
@@ -38,6 +48,15 @@ public class ApplyActivity extends AppCompatActivity implements View.OnClickList
     private MyScrollView scrollView;
     public static final int CAMERA_ITEM = 0;
     public static final int PHOTO_ITEM = 1;
+
+
+    public static String SAVE_IMAGE_DIR_PATH = Environment
+            .getExternalStorageDirectory().getPath() + "/SanHuan/camera/";
+    private String cameraPath;
+    private String imagePath;
+    public static final int ALBUM_REQUEST_CODE = 1;
+
+    public static final int CAMERA_IMAGE_CODE = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +81,7 @@ public class ApplyActivity extends AppCompatActivity implements View.OnClickList
         edit_date.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
+                //弹出日期选择框
                 if (hasFocus) {
                     showDatePickerDialog();
                 }
@@ -123,15 +143,90 @@ public class ApplyActivity extends AppCompatActivity implements View.OnClickList
             public void onClick(DialogInterface dialog, int which) {
                 switch (which) {
                     case CAMERA_ITEM:
-
+                        showPhoto();
                         break;
                     case PHOTO_ITEM:
-
+                        showCamera();
                         break;
                 }
             }
         });
         builder.show();
+    }
+
+    /**
+     * 弹出相机
+     */
+    public void showCamera() {
+        String state = Environment.getExternalStorageState();
+        if (state.equals(Environment.MEDIA_MOUNTED)) {
+            cameraPath = SAVE_IMAGE_DIR_PATH + System.currentTimeMillis() + ".png";
+
+            Intent intent_camera = new Intent();
+            intent_camera.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            //判断文件夹是否存在，不存在则创建
+            File dir = new File(SAVE_IMAGE_DIR_PATH);
+            if (!dir.exists()) {
+                dir.mkdirs();
+            }
+            Uri uri = Uri.fromFile(new File(cameraPath));
+            intent_camera.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+            startActivityForResult(intent_camera, CAMERA_IMAGE_CODE);
+        } else {
+            Toast.makeText(ApplyActivity.this, "请插入SD卡", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    /**
+     * 调用系统相册
+     */
+    public void showPhoto() {
+        Intent intent_photo = new Intent();
+        //设置文件类型
+        intent_photo.setType("image/*");
+        intent_photo.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent_photo, ALBUM_REQUEST_CODE);
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK) {
+            switch (requestCode) {
+                case CAMERA_IMAGE_CODE:
+                    //    拍照出来的相片的地址：  cameraPath
+
+                    Bitmap bm = BitmapFactory.decodeFile(cameraPath);
+
+                    L.showImageDialog(ApplyActivity.this, bm);
+
+                    break;
+                case ALBUM_REQUEST_CODE:
+
+                    try {
+                        Uri uri = data.getData();
+
+                        imagePath = MyUtil.getRealPathFromUri(ApplyActivity.this, uri);
+                        //选择相册选出来一张相片的地址：  imagePath
+
+
+                        //根据Uri获取Bitmap
+//                        ContentResolver resolver = getContentResolver();
+//                        Bitmap photo = MediaStore.Images.Media.getBitmap(resolver, uri);
+
+                        //根据绝对路径获取Bitmap
+                        Bitmap photo = BitmapFactory.decodeFile(imagePath);
+                        L.showImageDialog(ApplyActivity.this, photo);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                    break;
+            }
+        }
     }
 
     /**
@@ -143,7 +238,8 @@ public class ApplyActivity extends AppCompatActivity implements View.OnClickList
         DatePickerDialog dpd = new DatePickerDialog(ApplyActivity.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                edit_date.setText(year + "   /   " + month + "   /   " + dayOfMonth);
+
+                edit_date.setText(year + "   年   " + (month+1)  + "   月   " + dayOfMonth+"   日   ");
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
         dpd.show();

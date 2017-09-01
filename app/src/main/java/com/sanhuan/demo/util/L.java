@@ -2,11 +2,16 @@ package com.sanhuan.demo.util;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.sanhuan.demo.tabletest.ApplyActivity;
 
 /**
  * Created by Administrator on 2017/7/31.
@@ -77,5 +82,22 @@ public class L {
      */
     public static void dismissDialog(ProgressDialog dialog) {
         dialog.dismiss();
+    }
+
+    /**
+     * 图片显示框
+     *
+     * @param context
+     * @param bitmap
+     */
+    public static void showImageDialog(Context context, Bitmap bitmap) {
+        ImageView imageView = new ImageView(context);
+        imageView.setImageBitmap(bitmap);
+        imageView.setScaleType(ImageView.ScaleType.CENTER);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setView(imageView);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getWindow().setLayout(700, 700);
     }
 }

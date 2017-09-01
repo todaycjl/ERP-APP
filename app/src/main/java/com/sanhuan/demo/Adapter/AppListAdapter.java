@@ -7,22 +7,23 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.sanhuan.demo.model.Report;
 import com.sanhuan.demo.tabletest.R;
 
 import java.util.List;
 
 /**
- * Created by Administrator on 2017/8/14.
+ * Created by Administrator on 2017/8/24.
  */
 
-public class BillStateListAdapter extends BaseAdapter {
+public class AppListAdapter extends BaseAdapter {
     private Context context;
-    private List<Report> list;
+    private List<String> list;
+    private LayoutInflater mInflater;
 
-    public BillStateListAdapter(Context context, List<Report> list) {
+    public AppListAdapter(Context context, List<String> list) {
         this.context = context;
         this.list = list;
+        this.mInflater = LayoutInflater.from(context);
     }
 
     @Override
@@ -42,21 +43,21 @@ public class BillStateListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        MyViewHolder myViewHolder = null;
+        ViewHolder holder = null;
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.two_text_layout, parent, false);
-            myViewHolder = new MyViewHolder();
-            myViewHolder.textView1 = (TextView) convertView.findViewById(R.id.text1);
-            myViewHolder.textView2 = (TextView) convertView.findViewById(R.id.text2);
-            convertView.setTag(myViewHolder);
+            convertView = mInflater.inflate(R.layout.fragment_item, parent, false);
+            holder = new ViewHolder();
+            holder.text_items = (TextView) convertView.findViewById(R.id.app_text_items);
+            convertView.setTag(holder);
         } else {
-            myViewHolder = (MyViewHolder) convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
-        Report report = list.get(position);
+        holder.text_items.setText(list.get(position));
         return convertView;
     }
 
-    class MyViewHolder {
-        TextView textView1, textView2;
+
+    class ViewHolder {
+        TextView text_items;
     }
 }
